@@ -1,5 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { addAuth } from './actions';
+import { connect } from 'react-redux';
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -11,7 +13,7 @@ class LoginForm extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     if (this.login.current.value === 'Admin' && this.password.current.value === '12345') {
-      localStorage.setItem('auth', 'true');
+      this.props.dispatch(addAuth());
       this.props.history.push("/profile");
     }
     else {
@@ -36,6 +38,4 @@ class LoginForm extends React.Component {
   }
 }
 
-const RedirectLoginForm = withRouter(LoginForm);
-
-export default RedirectLoginForm;
+export default (withRouter(connect()(LoginForm)));

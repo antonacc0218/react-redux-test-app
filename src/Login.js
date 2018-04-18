@@ -1,12 +1,13 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import LoginForm from './LoginForm';
+import { connect } from 'react-redux';
 
 class Login extends React.Component {
   render() {
-    return localStorage.getItem('auth') === 'true' ? 
+    return this.props.auth ? 
       <Redirect to="/profile" /> : <LoginForm />
   }
 }
 
-export default Login;
+export default connect(state => ({ auth: state }))(Login);

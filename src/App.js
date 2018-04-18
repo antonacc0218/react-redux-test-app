@@ -4,18 +4,22 @@ import News from './News';
 import Profile from './Profile';
 import Login from './Login';
 import './App.css';
+import { removeAuth } from './actions';
+import { connect } from 'react-redux';
 
-const LoginButton = withRouter(({ history }) => {
-    if (localStorage.getItem('auth') === 'true')
+const LoginButton = withRouter(
+  connect(state => ({ auth: state }))(({ history, dispatch, auth }) => {
+    if (auth)
       return (
         <button onClick={() => {
-          localStorage.removeItem('auth');
+          dispatch(removeAuth());
           history.push("/");
         }}>Log out</button>
       );
     else
       return null;
-});
+  })
+);
 
 class App extends Component {
   render() {
