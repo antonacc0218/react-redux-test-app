@@ -4,21 +4,13 @@ import { withRouter } from 'react-router-dom';
 class LoginForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      login: '',
-      password: ''
-    };
-  }
-
-  handleChange = ({ target }) => {
-    this.setState({
-      [target.name]: target.value
-    });
+    this.login = React.createRef();
+    this.password = React.createRef();
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
-    if (this.state.login === 'Admin' && this.state.password === '12345') {
+    if (this.login.current.value === 'Admin' && this.password.current.value === '12345') {
       localStorage.setItem('auth', 'true');
       this.props.history.push("/profile");
     }
@@ -32,11 +24,11 @@ class LoginForm extends React.Component {
       <form onSubmit={this.handleSubmit}>
         <label>
           Login:
-          <input type="text" name="login" onChange={this.handleChange} />
+          <input type="text" name="login" ref={this.login} />
         </label>
         <label>
           Password:
-          <input type="password" name="password" onChange={this.handleChange} />
+          <input type="password" name="password" ref={this.password} />
         </label>
         <input type="submit" value="Submit" />
       </form>
