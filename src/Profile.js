@@ -1,12 +1,13 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 class Profile extends React.Component {
   render() {
-    return localStorage.getItem('auth') === 'true' ?
+    return this.props.auth ?
       <div>This is the profile page.</div> :
       <Redirect to="/login" />
   }
 }
 
-export default Profile;
+export default connect(state => ({ auth: state }))(Profile);
