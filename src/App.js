@@ -4,6 +4,7 @@ import News from './components/News';
 import Profile from './components/Profile';
 import Login from './components/Login';
 import Home from './components/Home';
+import PrivateRoute from './components/PrivateRoute';
 import LoginButton from './components/LoginButton'
 import './App.css';
 
@@ -20,8 +21,8 @@ class App extends Component {
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/news" component={News} />
-            <Route path="/profile" component={Profile} />
             <Route path="/login" component={Login} />
+            <PrivateRoute path="/profile" component={Profile} />
           </Switch>
           <LoginButton />
         </article>
