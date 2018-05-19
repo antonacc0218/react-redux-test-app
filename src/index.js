@@ -1,25 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import { authReducer } from './reducers';
+import reducer from './reducers';
+import { isAuthorized } from './helpers/auth'
 
-const store = createStore(authReducer, localStorage.getItem('auth') === 'true');
-
-store.subscribe(() => {
-  const auth = store.getState();
-  if (auth)
-    localStorage.setItem('auth', 'true');
-  else
-    localStorage.removeItem('auth');
-});
+const store = createStore(reducer, { auth: isAuthorized() });
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Router>
+      <App />
+    </Router>
   </Provider>,
   document.getElementById('root')
 );

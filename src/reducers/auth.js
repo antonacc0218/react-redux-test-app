@@ -1,4 +1,4 @@
-export const authReducer = (state = false, action) => {
+const auth = (state = false, action) => {
   switch (action.type) {
     case 'ADD_AUTH':
       return action.auth;
@@ -7,4 +7,6 @@ export const authReducer = (state = false, action) => {
     default:
       return state;
   }
-}
+};
+
+export default auth;

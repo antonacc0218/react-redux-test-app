@@ -1,47 +1,31 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Link, Route, withRouter } from 'react-router-dom';
-import News from './News';
-import Profile from './Profile';
-import Login from './Login';
+import { Link, Route, Switch } from 'react-router-dom';
+import News from './components/News';
+import Profile from './components/Profile';
+import Login from './components/Login';
+import Home from './components/Home';
+import LoginButton from './components/LoginButton'
 import './App.css';
-import { removeAuth } from './actions';
-import { connect } from 'react-redux';
-
-const LoginButton = withRouter(
-  connect(state => ({ auth: state }))(({ history, dispatch, auth }) => {
-    if (auth)
-      return (
-        <button onClick={() => {
-          dispatch(removeAuth());
-          history.push("/");
-        }}>Log out</button>
-      );
-    else
-      return null;
-  })
-);
 
 class App extends Component {
   render() {
     return (
-      <Router>
-        <div className="App">
-          <header>
-            <Link to="/">Home</Link>
-            <Link to="/news">News</Link>
-            <Link to="/profile">Profile</Link>
-          </header>
-          <article>
-            <Route path="/" exact={true} render={() => (
-              <div>Welcome to the app! Use the links above to navigate.</div>
-            )} />
+      <div className="App">
+        <nav>
+          <Link to="/">Home</Link>
+          <Link to="/news">News</Link>
+          <Link to="/profile">Profile</Link>
+        </nav>
+        <article>
+          <Switch>
+            <Route path="/" exact component={Home} />
             <Route path="/news" component={News} />
             <Route path="/profile" component={Profile} />
             <Route path="/login" component={Login} />
-            <LoginButton />
-          </article>
-        </div>
-      </Router>
+          </Switch>
+          <LoginButton />
+        </article>
+      </div>
     );
   }
 }

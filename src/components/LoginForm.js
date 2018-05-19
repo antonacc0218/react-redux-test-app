@@ -1,7 +1,8 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { addAuth } from './actions';
+import { addAuth } from '../actions/auth';
 import { connect } from 'react-redux';
+import { credentialsAreValid } from '../helpers/auth'
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -12,9 +13,9 @@ class LoginForm extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    if (this.login.current.value === 'Admin' && this.password.current.value === '12345') {
+    if (credentialsAreValid(this.login.current.value, this.password.current.value)) {
       this.props.dispatch(addAuth());
-      this.props.history.push("/profile");
+      this.props.history.push('/profile');
     }
     else {
       alert('Invalid credentials!');
@@ -38,4 +39,4 @@ class LoginForm extends React.Component {
   }
 }
 
-export default (withRouter(connect()(LoginForm)));
+export default withRouter(connect()(LoginForm));
