@@ -11,7 +11,7 @@ const LoginButton = ({ isAuthorized, onClick }) => {
     return null;
 }
 
-const mapStateToProps = state => ({ isAuthorized: state.session.user });
+const mapStateToProps = state => ({ isAuthorized: state.session.userId });
 
 const mapDispatchToProps = dispatch => ({
   onClick: () => {

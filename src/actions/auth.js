@@ -1,21 +1,24 @@
 import { credentialsAreValid } from '../helpers/auth';
 
-export const logIn = ({ username, password }, cb) => {
-  if (credentialsAreValid(username, password)) {
-    localStorage.setItem('session', username);
-    cb();
-    return {
-      type: 'LOG_IN',
-      user: {
-        name: username
+export const logIn = ({ email, password }, cb) => {
+  return dispatch => {
+    credentialsAreValid(email, password)
+      .then(userId => {
+        dispatch({
+          type: 'LOG_IN',
+          userId
+        });
+        cb();
+        localStorage.setItem('session', userId);
       }
-    };
-  }
-  else
-    return {
-      type: 'LOG_IN_ERROR',
-      error: 'Invalid credentials!'
-    };
+    )
+    .catch(err => {
+      dispatch({
+        type: 'LOG_IN_ERROR',
+        error: err.message
+      });
+    });
+  }; 
 }
 
 export const logOut = () => {

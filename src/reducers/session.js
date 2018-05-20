@@ -1,5 +1,7 @@
+import { getAuthorizedUser } from '../helpers/auth';
+
 const initialState = {
-  user: null,
+  userId: getAuthorizedUser(),
   error: ''
 };
 
@@ -8,13 +10,13 @@ const session = (state = initialState, action) => {
     case 'LOG_IN':
       return {
         ...state,
-        user: action.user,
+        userId: action.userId,
         error: ''
       };
     case 'LOG_OUT':
       return {
         ...state,
-        user: null,
+        userId: null,
         error: ''
       };
     case 'LOG_IN_ERROR':

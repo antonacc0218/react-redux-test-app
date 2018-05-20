@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.login = React.createRef();
+    this.email = React.createRef();
     this.password = React.createRef();
     this.state = { redirectToReferrer: false };
   }
@@ -13,13 +13,12 @@ class Login extends React.Component {
     e.preventDefault();
     this.props.logIn(
       {
-        username: this.login.current.value,
+        email: this.email.current.value,
         password: this.password.current.value
       },
       () => {
       this.setState({ redirectToReferrer: true });
-    }
-    );
+    });
   }
 
   render() {
@@ -34,8 +33,8 @@ class Login extends React.Component {
           {this.props.error && <p>{this.props.error}</p>}
           <form onSubmit={this.handleSubmit}>
             <label>
-              Login:
-              <input type="text" name="login" ref={this.login} />
+              E-mail:
+              <input type="text" name="email" ref={this.email} />
             </label>
             <label>
               Password:
