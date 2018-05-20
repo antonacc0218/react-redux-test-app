@@ -7,9 +7,9 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import reducer from './reducers';
-import { isAuthorized } from './helpers/auth'
+import { getAuthorizedUser } from './helpers/auth';
 
-const store = createStore(reducer, { auth: isAuthorized() });
+const store = createStore(reducer, { session: getAuthorizedUser() });
 
 ReactDOM.render(
   <Provider store={store}>
@@ -19,4 +19,5 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
+
 registerServiceWorker();

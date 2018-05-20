@@ -1,20 +1,22 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { removeAuth } from '../actions/auth';
+import { logOut } from '../actions/auth';
 
-const LoginButton = ({ history, dispatch, auth }) => {
-  if (auth)
+const LoginButton = ({ isAuthorized, onClick }) => {
+  if (isAuthorized)
     return (
-      <button onClick={() => {
-        dispatch(removeAuth());
-        history.push("/");
-      }}>Log out</button>
+      <button onClick={onClick}>Log out</button>
     );
   else
     return null;
 }
 
-const mapStateToProps = state => ({ auth: state.auth });
+const mapStateToProps = state => ({ isAuthorized: state.session.user });
 
-export default withRouter(connect(mapStateToProps)(LoginButton));
+const mapDispatchToProps = dispatch => ({
+  onClick: () => {
+    dispatch(logOut())
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginButton);

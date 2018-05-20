@@ -1,11 +1,20 @@
 import React from 'react';
 
-class News extends React.Component {
-  render() {
+const News = ({ data }) => {
+  if (data.length)
     return (
-      <div>This is the news feed.</div>
+      <ul>
+        {
+          data.map(newsItem => (
+            <li>{newsItem.text}</li>
+          ))
+        }
+      </ul>
     );
-  }
+  else
+    return (
+      <div>There are no news yet...</div>
+    );
 }
 
 export default News;

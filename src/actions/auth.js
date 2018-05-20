@@ -1,15 +1,26 @@
-export const addAuth = () => {
-  localStorage.setItem('auth', 'true');
-  return {
-    type: 'ADD_AUTH',
-    auth: true
-  };
+import { credentialsAreValid } from '../helpers/auth';
+
+export const logIn = ({ username, password }, cb) => {
+  if (credentialsAreValid(username, password)) {
+    localStorage.setItem('session', username);
+    cb();
+    return {
+      type: 'LOG_IN',
+      user: {
+        name: username
+      }
+    };
+  }
+  else
+    return {
+      type: 'LOG_IN_ERROR',
+      error: 'Invalid credentials!'
+    };
 }
 
-export const removeAuth = () => {
-  localStorage.removeItem('auth');
+export const logOut = () => {
+  localStorage.removeItem('session');
   return {
-    type: 'REMOVE_AUTH',
-    auth: false
+    type: 'LOG_OUT'
   };
 }

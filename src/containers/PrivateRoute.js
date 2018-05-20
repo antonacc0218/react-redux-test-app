@@ -7,7 +7,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      rest.auth ? (
+      rest.isAuthorized ? (
         <Component {...props} />
       ) : (
         <Redirect
@@ -21,6 +21,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   />
 );
 
-const mapStateToProps = state => ({ auth: state.auth });
+const mapStateToProps = state => ({ isAuthorized: state.session.user });
 
 export default connect(mapStateToProps)(PrivateRoute);

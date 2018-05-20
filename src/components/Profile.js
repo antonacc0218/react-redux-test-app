@@ -1,15 +1,7 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
 
-class Profile extends React.Component {
-  render() {
-    return this.props.auth ?
-      <div>This is the profile page.</div> :
-      <Redirect to="/login" />
-  }
+const Profile = ({ user }) => {
+  return <div>You are logged as: {user.name}</div>;
 }
 
-const mapStateToProps = state => ({ auth: state.auth });
-
-export default connect(mapStateToProps)(Profile);
+export default Profile;

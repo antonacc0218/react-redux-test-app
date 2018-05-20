@@ -1,8 +1,5 @@
 import React from 'react';
-import { withRouter, Redirect } from 'react-router-dom';
-import { addAuth } from '../actions/auth';
-import { connect } from 'react-redux';
-import { credentialsAreValid } from '../helpers/auth'
+import { Redirect } from 'react-router-dom';
 
 class Login extends React.Component {
   constructor(props) {
@@ -14,13 +11,15 @@ class Login extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    if (credentialsAreValid(this.login.current.value, this.password.current.value)) {
-      this.props.dispatch(addAuth());
+    this.props.logIn(
+      {
+        username: this.login.current.value,
+        password: this.password.current.value
+      },
+      () => {
       this.setState({ redirectToReferrer: true });
     }
-    else {
-      alert('Invalid credentials!');
-    }
+    );
   }
 
   render() {
@@ -31,20 +30,23 @@ class Login extends React.Component {
     }
     else {
       return (
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Login:
-            <input type="text" name="login" ref={this.login} />
-          </label>
-          <label>
-            Password:
-            <input type="password" name="password" ref={this.password} />
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
+        <div>
+          {this.props.error && <p>{this.props.error}</p>}
+          <form onSubmit={this.handleSubmit}>
+            <label>
+              Login:
+              <input type="text" name="login" ref={this.login} />
+            </label>
+            <label>
+              Password:
+              <input type="password" name="password" ref={this.password} />
+            </label>
+            <input type="submit" value="Submit" />
+          </form>
+        </div>
       );
     }
   }
 }
 
-export default withRouter(connect()(Login));
+export default Login;
