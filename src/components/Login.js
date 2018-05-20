@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import ErrorMsg from './ErrorMsg';
 
 class Login extends React.Component {
   constructor(props) {
@@ -17,8 +18,9 @@ class Login extends React.Component {
         password: this.password.current.value
       },
       () => {
-      this.setState({ redirectToReferrer: true });
-    });
+        this.setState({ redirectToReferrer: true });
+      }
+    );
   }
 
   render() {
@@ -28,9 +30,11 @@ class Login extends React.Component {
       return <Redirect to={from} />
     }
     else {
+      if (this.props.error)
+        this.password.current.value = '';
       return (
         <div>
-          {this.props.error && <p>{this.props.error}</p>}
+          <ErrorMsg text={this.props.error} />
           <form onSubmit={this.handleSubmit}>
             <label>
               E-mail:

@@ -1,4 +1,5 @@
 import React from 'react';
+import ErrorMsg from './ErrorMsg';
 
 const rearrangeLinks = link => {
   return link.label === 'web' ? -1 : 1;
@@ -9,7 +10,7 @@ class Profile extends React.Component {
     const { user, error } = this.props;
 
     if (error)
-      return <div>An error occurred: {error}</div>;
+      return <ErrorMsg text={error} />;
     
     if (user)
       return (
