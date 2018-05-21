@@ -18,6 +18,7 @@ const News = ({ data, error, isFetching }) => {
             </div>
           ))
         }
+        <p>Total news items: {data.length}</p>
       </div>
     );
   else
