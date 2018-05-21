@@ -9,14 +9,15 @@ class NewsContainer extends React.Component {
   }
 
   render() {
-    const { data, error } = this.props;
-    return <News data={data} error={error} />;
+    const { data, error, isFetching } = this.props;
+    return <News data={data} error={error} isFetching={isFetching} />;
   }
 }
 
 const mapStateToProps = state => ({
   data: state.news.items,
-  error: state.news.error
+  error: state.news.error,
+  isFetching: state.news.isFetching
 });
 
 export default connect(mapStateToProps)(NewsContainer);

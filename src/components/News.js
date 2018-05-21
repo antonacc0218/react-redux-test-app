@@ -1,6 +1,9 @@
 import React from 'react';
 
-const News = ({ data, error }) => {
+const News = ({ data, error, isFetching }) => {
+  if (isFetching)
+    return <div>Loading news...</div>;
+
   if (error)
     return <div>{error}</div>;
 

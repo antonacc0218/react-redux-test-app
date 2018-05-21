@@ -1,24 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Profile from '../components/Profile';
-import { getUserData } from '../actions/user';
+import { fetchUserIfNeeded } from '../actions/user';
 
 class ProfileContainer extends React.Component {
   componentDidMount() {
-    const { user, userId } = this.props;
-    if (!user || user.userId !== userId)
-      this.props.dispatch(getUserData(userId));
+    this.props.dispatch(fetchUserIfNeeded());
   }
 
   render() {
-    return <Profile user={this.props.user} error={this.props.error} />;
+    const { user, error, isFetching } = this.props;
+    return <Profile user={user} error={error} isFetching={isFetching} />;
   }
 }
 
 const mapStateToProps = state => ({
-  userId: state.session.userId,
   user: state.user.data,
-  error: state.user.error
+  error: state.user.error,
+  isFetching: state.user.isFetching
 });
 
 export default connect(mapStateToProps)(ProfileContainer);
