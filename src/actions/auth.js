@@ -1,6 +1,6 @@
 import { credentialsAreValid } from '../helpers/auth';
 
-export const logIn = ({ email, password }, cb) => {
+export const logIn = ({ email, password }, cb, cbErr) => {
   return dispatch => {
     credentialsAreValid(email, password)
       .then(userId => {
@@ -17,6 +17,7 @@ export const logIn = ({ email, password }, cb) => {
         type: 'LOG_IN_ERROR',
         error: err.message
       });
+      cbErr();
     });
   }; 
 }

@@ -7,11 +7,16 @@ class Login extends React.Component {
     super(props);
     this.email = React.createRef();
     this.password = React.createRef();
-    this.state = { redirectToReferrer: false };
+    this.state = {
+      redirectToReferrer: false,
+      isLoading: false
+    };
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
+    
+    this.setState({ isLoading: true });
     this.props.logIn(
       {
         email: this.email.current.value,
@@ -19,6 +24,10 @@ class Login extends React.Component {
       },
       () => {
         this.setState({ redirectToReferrer: true });
+      },
+      () => {
+        this.password.current.value = '';
+        this.setState({ isLoading: false });
       }
     );
   }
@@ -30,8 +39,6 @@ class Login extends React.Component {
       return <Redirect to={from} />
     }
     else {
-      if (this.props.error)
-        this.password.current.value = '';
       return (
         <div>
           <ErrorMsg text={this.props.error} />
@@ -44,7 +51,7 @@ class Login extends React.Component {
               Password:
               <input type="password" name="password" ref={this.password} />
             </label>
-            <input type="submit" value="Submit" />
+            <input type="submit" value={this.state.isLoading ? "Loading..." : "Submit"} disabled={this.state.isLoading} />
           </form>
         </div>
       );
