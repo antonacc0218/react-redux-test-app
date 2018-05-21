@@ -24,7 +24,7 @@ class Profile extends React.Component {
           </ul>
           <p>Links:</p>
           <ul>
-            {user.social.sort(rearrangeLinks).map((link, i) => (
+            {user.social.slice().sort(rearrangeLinks).map((link, i) => (
               <li key={i}>
                 <a href={link.link} target="_blank">{link.label}</a>
               </li>
