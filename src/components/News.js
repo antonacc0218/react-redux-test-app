@@ -1,15 +1,21 @@
 import React from 'react';
 
-const News = ({ data }) => {
+const News = ({ data, error }) => {
+  if (error)
+    return <div>{error}</div>;
+
   if (data.length)
     return (
-      <ul>
+      <div>
         {
           data.map(newsItem => (
-            <li>{newsItem.text}</li>
+            <div key={newsItem.id}>
+              <h2>{newsItem.title}</h2>
+              <p>{newsItem.text}</p>
+            </div>
           ))
         }
-      </ul>
+      </div>
     );
   else
     return (
