@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { logOut } from '../actions/auth';
+import { logOut } from '../actions/session';
 
-const LoginButton = ({ isAuthorized, onClick }) => {
+const LoginButton = ({ isAuthorized, dispatch }) => {
   if (isAuthorized)
     return (
-      <button onClick={onClick}>Log out</button>
+      <button onClick={() => dispatch(logOut())}>Log out</button>
     );
   else
     return null;
@@ -13,10 +13,4 @@ const LoginButton = ({ isAuthorized, onClick }) => {
 
 const mapStateToProps = state => ({ isAuthorized: state.session.userId });
 
-const mapDispatchToProps = dispatch => ({
-  onClick: () => {
-    dispatch(logOut())
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginButton);
+export default connect(mapStateToProps)(LoginButton);

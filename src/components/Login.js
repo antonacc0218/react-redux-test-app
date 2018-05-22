@@ -7,41 +7,30 @@ class Login extends React.Component {
     super(props);
     this.email = React.createRef();
     this.password = React.createRef();
-    this.state = {
-      redirectToReferrer: false,
-      isLoading: false
-    };
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
     
-    this.setState({ isLoading: true });
-    this.props.logIn(
-      {
-        email: this.email.current.value,
-        password: this.password.current.value
-      },
-      () => {
-        this.setState({ redirectToReferrer: true });
-      },
-      () => {
-        this.password.current.value = '';
-        this.setState({ isLoading: false });
-      }
-    );
+    this.props.logIn({
+      email: this.email.current.value,
+      password: this.password.current.value
+    });
   }
 
   render() {
     const { from } = this.props.location.state || { from: { pathname: '/' } };
+    const { loginSuccessful, error, isLoading } = this.props;
 
-    if (this.state.redirectToReferrer) {
+    if (loginSuccessful) {
       return <Redirect to={from} />
     }
     else {
+      if (error)
+        this.password.current.value = '';
       return (
         <div>
-          <ErrorMsg text={this.props.error} />
+          <ErrorMsg text={error} />
           <form onSubmit={this.handleSubmit}>
             <label>
               E-mail:
@@ -51,7 +40,7 @@ class Login extends React.Component {
               Password:
               <input type="password" name="password" ref={this.password} />
             </label>
-            <input type="submit" value={this.state.isLoading ? "Loading..." : "Submit"} disabled={this.state.isLoading} />
+            <input type="submit" value={isLoading ? "Loading..." : "Submit"} disabled={isLoading} />
           </form>
         </div>
       );
